@@ -102,6 +102,22 @@ const App = () => {
     window.location.reload()
   }
 
+  const viewChange = async (blog) => {
+
+  };
+
+  const updateBlog = async (blog) => {
+    blogService.update(blog.id, 
+    {title: blog.title,
+    author: blog.author,
+    url: blog.url,
+    likes: blog.likes + 1})
+    
+    const newBlogs = [...blogs];
+    newBlogs[newBlogs.findIndex(x => x.id === blog.id)].likes += 1;
+    setBlogs(newBlogs);
+  };
+
   return (
     <div>
       <h2>Login</h2>
@@ -115,7 +131,7 @@ const App = () => {
       
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} viewChange={viewChange}/>
       )}
     </div>
   )
