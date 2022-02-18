@@ -62,14 +62,17 @@ test('Test likes', () => {
     likes: 5
   }
 
-  const mockHandler = jest.fn()
-  render(<Blog blog={blog} updateBlog={mockHandler} />)
+  const mockHandler1 = jest.fn()
+  const mockHandler2 = jest.fn()
+  render(<Blog blog={blog} viewChange={mockHandler1} updateBlog={mockHandler2} />)
 
-  const button = screen.getByText('Like')
-  userEvent.click(button)
-  userEvent.click(button)
+  const button1 = screen.getByText('View')
+  userEvent.click(button1)
+  const button2 = screen.getByText('Like')
+  userEvent.click(button2)
+  userEvent.click(button2)
 
 
-  expect(mockHandler.mock.calls).toHaveLength(2)
+  expect(mockHandler2.mock.calls).toHaveLength(2)
 })
 

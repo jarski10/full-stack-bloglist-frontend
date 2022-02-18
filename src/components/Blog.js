@@ -44,10 +44,9 @@ const handleLike = () => {
       <div className='blog'>
       {infoVisible === false ?
       <div><div>{blog.title}</div><button onClick={infoHandler}>View</button></div> :
-      <div><div>{blog.title}</div><div>{blog.url}</div><div>{blog.likes}</div> <div>{blog.author}</div> <button onClick={infoHandler}>Hide</button></div>
+      <div><div>{blog.title}</div><div>{blog.url}</div><div>{blog.likes} <button onClick={handleLike}>Like</button></div> <div>{blog.author}</div> <button onClick={infoHandler}>Hide</button></div>
       }
       </div>
-      <button onClick={handleLike}>Like</button>
     </div>
   )
 }

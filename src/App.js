@@ -11,7 +11,7 @@ const App = () => {
   const [, setNewTitle] = useState('')
   const [, setNewAuthor] = useState('')
   const [, setNewnewUrl] = useState('')
-  const [, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -31,6 +31,18 @@ const App = () => {
     }
   }, [])
 
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+  
+    return (
+      <div className="error">
+        {message}
+      </div>
+    )
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
     console.log('logging in with', username, password)
@@ -38,6 +50,7 @@ const App = () => {
       const user = await loginService.login({
         username, password,
       })
+      console.log('logged in')
 
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
@@ -48,6 +61,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
+      console.log("error")
       setErrorMessage('wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -77,6 +91,7 @@ const App = () => {
       <div>
         username
         <input
+          id='username'
           type="text"
           value={username}
           name="Username"
@@ -86,13 +101,14 @@ const App = () => {
       <div>
         password
         <input
+          id='password'
           type="password"
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button id="login-button" type="submit">login</button>
     </form>
   )
 
@@ -120,6 +136,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={errorMessage} />
       <h2>Login</h2>
       {user === null ?
         loginForm() :
@@ -130,9 +147,11 @@ const App = () => {
       }
       
       <h2>blogs</h2>
+      <div id="blog-list">
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} updateBlog={updateBlog} viewChange={viewChange}/>
       )}
+      </div>
     </div>
   )
 }
