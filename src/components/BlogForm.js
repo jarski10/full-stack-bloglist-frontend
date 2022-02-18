@@ -1,11 +1,16 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
+
 
 
 const BlogForm = ({ createBlog }) => {
+  const [blogFormVisible, setBlogFormVisible] = useState(false)
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewnewUrl] = useState('')
+
+  const hideWhenVisible = { display: blogFormVisible ? 'none' : '' }
+  const showWhenVisible = { display: blogFormVisible ? '' : 'none' }
 
   const addBlog = (event) => {
     event.preventDefault()
@@ -18,31 +23,47 @@ const BlogForm = ({ createBlog }) => {
 
 
   return (
-    <form onSubmit={addBlog}>
-      <div>
-        Title
-        <input
-          value={newTitle}
-          onChange={({ target }) => setNewTitle(target.value)}
-        />
+
+    <div>
+      <div style={hideWhenVisible}>
+        <button onClick={() => setBlogFormVisible(true)}>add blog</button>
       </div>
-      <div>
-        Author
-        <input
-          value={newAuthor}
-          onChange={({ target }) => setNewAuthor(target.value)}
-        />
+
+      <div style={showWhenVisible}>
+        <form onSubmit={addBlog}>
+          <div>
+            Title
+            <input
+              value={newTitle}
+              onChange={({ target }) => setNewTitle(target.value)}
+            />
+          </div>
+          <div>
+            Author
+            <input
+              value={newAuthor}
+              onChange={({ target }) => setNewAuthor(target.value)}
+            />
+          </div>
+          <div>
+            Url
+            <input
+              value={newUrl}
+              onChange={({ target }) => setNewnewUrl(target.value)}
+            />
+          </div>
+          <button type="submit">save</button>
+        </form>
+        <button onClick={() => setBlogFormVisible(false)}>cancel</button>
       </div>
-      <div>
-        Url
-        <input
-          value={newUrl}
-          onChange={({ target }) => setNewnewUrl(target.value)}
-        />
-      </div>
-      <button type="submit">save</button>
-    </form>
+    </div>
   )
 }
+
+BlogForm.propTypes = {
+  createBlog: PropTypes.func.isRequired,
+}
+
+
 
 export default BlogForm

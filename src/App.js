@@ -3,13 +3,15 @@ import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import PropTypes from 'prop-types'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewnewUrl] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [, setNewTitle] = useState('')
+  const [, setNewAuthor] = useState('')
+  const [, setNewnewUrl] = useState('')
+  const [, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -63,6 +65,12 @@ const App = () => {
         setNewnewUrl('')
       })
   }
+
+  addBlog.PropTypes = {
+    blogObject: PropTypes.object.isRequired
+  }
+
+
   
   const loginForm = () => (
     <form onSubmit={handleLogin}>
